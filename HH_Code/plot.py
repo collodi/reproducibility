@@ -2,7 +2,12 @@ import glob
 import matplotlib.pyplot as plt
 
 data = []
-filename = glob.glob('./results/*.m')[0]
+files = glob.glob('./**/**/*.m')
+
+for i, f in enumerate(files):
+    print('%s) %s' % (i, f))
+
+filename = files[int(input('Choose a number. Which file? '))]
 
 # parse data from .m file
 with open(filename) as f:
