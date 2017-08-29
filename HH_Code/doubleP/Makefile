@@ -1,5 +1,5 @@
 CC=g++
-SRCS=src/*
+SRCS=src/*.cpp
 FLAGS=--std=c++11
 INCLUDES=-I./includes
 

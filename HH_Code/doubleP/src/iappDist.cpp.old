@@ -83,6 +83,7 @@ void initRandIappValues_100(std::vector<double> &iapp) {
 
 	/* VETOR DE-SORDENADO */
 
+/*
 	iapp[0] = -2.18619;
 	iapp[1] = -2.57576;
 	iapp[2] = -3.41212;
@@ -183,6 +184,8 @@ void initRandIappValues_100(std::vector<double> &iapp) {
 	iapp[97] = -6.51036;
 	iapp[98] = -0.490585;
 	iapp[99] = 4.55962;
+*/
+
 
 	/*VETOR INTERCALADO*/
 
@@ -401,7 +404,7 @@ void initRandIappValues_100(std::vector<double> &iapp) {
 	*/
 
 	/* VETOR ORDENADO DES */
-/*
+
 	iapp[0] = 4.559620;
 	iapp[1] = 4.392070;
 	iapp[2] = 4.374220;
@@ -502,7 +505,6 @@ void initRandIappValues_100(std::vector<double> &iapp) {
 	iapp[97] = -9.563740;
 	iapp[98] = -9.626910;
 	iapp[99] = -9.749140;
-	*/
 }
 
 
