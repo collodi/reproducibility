@@ -1,5 +1,5 @@
 all: doubleP doubleBoostP longDoubleP
-.PHONY: doubleP doubleBoostP longDoubleP
+.PHONY: doubleP doubleBoostP longDoubleP plot
 
 doubleP:
 	$(MAKE) -C $@
@@ -9,3 +9,6 @@ doubleBoostP:
 
 longDoubleP:
 	$(MAKE) -C $@
+
+plot:
+	python plot.py
