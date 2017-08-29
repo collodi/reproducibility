@@ -41,7 +41,7 @@ using namespace boost::numeric::odeint;
 
 // Simulation constants
 const unsigned int nNeurons = 100;
-const double dt = 0.01;							// Time step: ms
+const double dt = 0.00125;							// Time step: ms
 const double maxTimeSimulation = 8000;  		// Maximum simulation time: ms
 const bool SAVE_SIMULATION = true;
 
