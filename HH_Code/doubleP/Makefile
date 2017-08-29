@@ -2,18 +2,29 @@ CC=g++
 SRCS=src/*.cpp
 FLAGS=--std=c++11
 INCLUDES=-I./includes
-DT=0.01
+
+ifndef DT
+	DT=0.01
+	PREREQ=$(SRCS) includes/*
+else
+	PREREQ=FORCE
+endif
 
 all: runner
 
-runner: $(SRCS)
-	$(CC) $(FLAGS) $(INCLUDES) $(SRCS) -Ddt=$(DT) -o runner
+runner: $(PREREQ)
+	$(CC) $(FLAGS) $(INCLUDES) $(SRCS) -DDT=$(DT) -o runner
 
-.PHONY: run clean
+.PHONY: run plot clean FORCE
 
 run: runner
 	mkdir -p results
 	./runner -case 21 -nBurst 200 -pExcN 1.0 -vInh 70
 
+plot:
+	$(MAKE) -C ../ plot
+
 clean:
 	rm runner
+
+FORCE:
