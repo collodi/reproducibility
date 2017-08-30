@@ -19,7 +19,8 @@ runner: $(PREREQ)
 
 run: runner
 	mkdir -p results
-	./runner -case 21 -nBurst 200 -pExcN 1.0 -vInh 70
+	./runner -case 21 -nBurst 200 -pExcN 1.0 -vInh 70 > ./results/dt$(subst 0.,,$(DT)).out
+	rm ./results/*.txt
 
 plot:
 	$(MAKE) -C ../ plot
