@@ -20,7 +20,7 @@ with open(filename) as f:
 xs = [x for neuron in data for x in neuron]
 ys = [i + 1 for i in range(len(data)) for _ in data[i]]
 
-plt.plot(xs, ys, 'r,')
+plt.plot(xs, ys, 'r.')
 if input('Save the figure? (y/n) ') == 'y':
     plt.savefig(input('filename? '))
 

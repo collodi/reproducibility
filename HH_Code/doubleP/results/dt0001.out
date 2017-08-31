@@ -11,3 +11,13 @@ Case = 21
 SAVE_SIMULATION = 1
 
 <100,70.0000>- burst:1, time: 98.3249
+<100,70.0000>- burst:2, time: 2194.9612
+<100,70.0000>- burst:3, time: 4410.4314
+<100,70.0000>- burst:4, time: 6597.7633
+<100,70.0000>- burst:5, time: 7075.6914
+Simulation duration: 12662.3330 seconds
+=========================================
+Writing in file: ./results/HH_BBT_case21_rk4_dt0_100,0,vI70,t=8s_double_IappDES.txt
+Writing in file: ./results/HH_BBT_case21_rk4_dt0_100,0,vI70,t=8s_double_IappDES,Epis.txt
+Writing in file: ./results/HH_BBT_case21_rk4_dt0_100,0,vI70,t=8s_double_IappDES,Iapp.txt
+Writing in file: ./results/HH_BBT_case21_rk4_dt0_100_0_vI_70_t8s_double_IappDES_Spikes.m
