@@ -11,4 +11,4 @@ longDoubleP:
 	$(MAKE) -C $@
 
 plot:
-	python plot.py
+	python3 plot.py
