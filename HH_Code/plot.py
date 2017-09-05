@@ -1,16 +1,16 @@
-import glob
+import pathlib
 import matplotlib.pyplot as plt
 
 data = []
-files = glob.glob('./**/**/*.m')
+files = list(pathlib.Path('.').glob('**/*.m'))
 
 for i, f in enumerate(files):
-    print('%s) %s' % (i, f))
+    print('%s) %s' % (i, f.as_posix()))
 
 filename = files[int(input('Choose a number. Which file? '))]
 
 # parse data from .m file
-with open(filename) as f:
+with open(filename.as_posix()) as f:
     for line in f.readlines():
         s = line.index('[') + 2
         e = line.index(']')
@@ -22,6 +22,6 @@ ys = [i + 1 for i in range(len(data)) for _ in data[i]]
 
 plt.plot(xs, ys, 'r.')
 if input('Save the figure? (y/n) ') == 'y':
-    plt.savefig(input('filename? '))
+    plt.savefig(filename.name[:-2] + '.pdf')
 
 plt.show()
