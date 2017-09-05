@@ -1,0 +1,25 @@
+Simulation ...!!!
+Running with the parameters:
+Total Neurons = 100
+Exc Neurons = 100
+Inh Neurons = 0
+maxTimeSimulation = 8.000000 s
+nBurst = 200
+dt = 0.002500
+vInh = 70.000000
+Case = 21
+SAVE_SIMULATION = 1
+
+<100,70.0000>- burst:1, time: 98.3075
+<100,70.0000>- burst:2, time: 1656.1575
+<100,70.0000>- burst:3, time: 2667.0600
+<100,70.0000>- burst:4, time: 4416.7675
+<100,70.0000>- burst:5, time: 4991.6875
+<100,70.0000>- burst:6, time: 5731.1400
+<100,70.0000>- burst:7, time: 7576.2075
+Simulation duration: 702.5522 seconds
+=========================================
+Writing in file: ./results/HH_BBT_case21_rk4_dt2_100,0,vI70,t=8s_double_IappDES.txt
+Writing in file: ./results/HH_BBT_case21_rk4_dt2_100,0,vI70,t=8s_double_IappDES,Epis.txt
+Writing in file: ./results/HH_BBT_case21_rk4_dt2_100,0,vI70,t=8s_double_IappDES,Iapp.txt
+Writing in file: ./results/HH_BBT_case21_rk4_dt2_100_0_vI_70_t8s_double_IappDES_Spikes.m
