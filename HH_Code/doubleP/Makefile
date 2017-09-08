@@ -1,6 +1,6 @@
 CC=g++
 SRCS=src/*.cpp
-FLAGS=--std=c++11
+FLAGS=--std=c++11 -O2
 INCLUDES=-I./includes
 
 ifndef DT
