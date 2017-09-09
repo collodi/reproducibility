@@ -2,19 +2,17 @@ Runtime Parameters:
   ./program -case 21 -nBurst 200 -pExcN 1.0 -vInh 70
 
 Compilers:
+  flags: --std=c++11
+
   Gentoo Linux:
     version: g++ (Gentoo 5.4.0-r3 p1.3, pie-0.6.5) 5.4.0
-    flags: --std=c++11
     machine: x86_64-pc-linux-gnu
   Linux Mint:
-    version:
-    flags:
-    machine:
+    version: g++ (Ubuntu 5.4.0-6ubuntu1~16.04.4) 5.4.0 20160609
+    machine: x86_64-linux-gnu
   Windows:
     version: g++ (GCC) 5.4.0
-    flags: --std=c++11
     machine: x86_64-pc-cygwin
   Mac:
-    version:
-    flags:
-    machine:
+    version: Apple LLVM version 6.0 (clang-600.0.56) (based on LLVM 3.5svn)
+    machine: x86_64-apple-darwin14.3.0
