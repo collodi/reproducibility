@@ -4,14 +4,19 @@
  *  Created on: Oct 26, 2016
  *      Author: Wilfredo Blanco
  */
+#include <boost/multiprecision/cpp_dec_float.hpp>
+#include <boost/math/special_functions/gamma.hpp>
+
 
 #include <iostream>     // std::cout
 #include <fstream>      // std::ofstream
+
 
 #include <cstdlib>        // RAND_MAX
 #include "iappDist.h"
 
 using namespace std;
+using namespace boost::multiprecision;
 
 void initUniformSpacedIappValues( std::vector<double> &iapp, double deli, double i0) {
 	// Uniformly spaced applied currents Ii in the interval [i0, i0+deli] :
@@ -25,7 +30,7 @@ void initRandDistIappValues( std::vector<double> &iapp, double deli, double i0) 
 		iapp[n] = i0+((double)rand()/RAND_MAX)*deli;
 }
 
-void initRandIappValues(std::vector<double> &iapp) {
+void initRandIappValues(std::vector<cpp_dec_float_100> &iapp) {
 
 	int numele = iapp.size();
 	switch (numele) {
@@ -46,7 +51,8 @@ void initRandIappValues(std::vector<double> &iapp) {
 }
 
 // Function to write a .txt
-int writeIappToFile (std::vector<double> &iapp, std::string const fileNameStr){
+
+int writeIappToFile (std::vector<cpp_dec_float_100> &iapp, std::string const fileNameStr){
 
 	ofstream myfile(fileNameStr);
 	unsigned int nNeurons = iapp.size();
@@ -68,7 +74,7 @@ int writeIappToFile (std::vector<double> &iapp, std::string const fileNameStr){
 
 
 // Iapp values for 100 neurons
-void initRandIappValues_100(std::vector<double> &iapp) {
+void initRandIappValues_100(std::vector<cpp_dec_float_100> &iapp) {
 	// Specific case of Random distribution values in the interval [i0, i0+deli]
 	// Fix values for every simulation
 	if (iapp.size()!=100)
@@ -184,11 +190,13 @@ void initRandIappValues_100(std::vector<double> &iapp) {
 	iapp[98] = -0.490585;
 	iapp[99] = 4.55962;
 
+
+
 	/*VETOR INTERCALADO*/
 
-/*
-	iapp[0] = -2.18619;
-	iapp[1] = 2.96518; 
+
+/*	iapp[0] = -2.18619;
+	iapp[1] = 2.96518;
 	iapp[2] = -2.57576;
 	iapp[3] = 3.7141;
 	iapp[4] = -3.41212;
@@ -197,18 +205,18 @@ void initRandIappValues_100(std::vector<double> &iapp) {
 	iapp[7] = 2.06839;
 	iapp[8] = -5.39247;
 	iapp[9] = 1.66234;
-	
+
 	iapp[10] = -3.20933;
-	iapp[11] = 2.83197; 
+	iapp[11] = 2.83197;
 	iapp[12] = -8.78277;
 	iapp[13] = 3.40739;
 	iapp[14] = -8.15378;
-	iapp[15] = 2.82739; 
+	iapp[15] = 2.82739;
 	iapp[16] = -5.6827;
 	iapp[17] = 4.55962;
 	iapp[18] = -4.08322;
 	iapp[19] = 1.8244;
-	
+
 	iapp[20] = -5.76464;
 	iapp[21] = 3.99792;
 	iapp[22] = -2.69158;
@@ -219,7 +227,7 @@ void initRandIappValues_100(std::vector<double> &iapp) {
 	iapp[27] = 0.237281;
 	iapp[28] = -9.56374;
 	iapp[29] = 0.655232;
-	
+
 	iapp[30] = -5.77334;
 	iapp[31] = 3.81252;
 	iapp[32] = -6.84317;
@@ -230,41 +238,41 @@ void initRandIappValues_100(std::vector<double> &iapp) {
 	iapp[37] = 0.690023;
 	iapp[38] = -0.471816;
 	iapp[39] = 2.26341;
-	
+
 	iapp[40] = -3.84289;
 	iapp[41] = 0.794397;
 	iapp[42] = -3.70281;
 	iapp[43] = 1.01733;
 	iapp[44] = -5.67721;
-	iapp[45] = 2.92398; 
+	iapp[45] = 2.92398;
 	iapp[46] = -8.66329;
 	iapp[47] = 0.197913;
 	iapp[48] = -6.82577;
 	iapp[49] = 4.37422;
-	
+
 	iapp[50] = -5.59847;
 	iapp[51] = 0.769219;
 	iapp[52] = -3.68862;
 	iapp[53] = 4.39207;
 	iapp[54] = -4.54604;
-	iapp[55] = 2.66762; 
+	iapp[55] = 2.66762;
 	iapp[56] = -0.170141;
 	iapp[57] = 1.93197;
 	iapp[58] = -9.07758;
-	iapp[59] = 2.61223; 
-	
+	iapp[59] = 2.61223;
+
 	iapp[60] = -8.10526;
 	iapp[61] = 1.53645;
 	iapp[62] = -8.86425;
 	iapp[63] = 1.02374;		//  Valores Positivos vem até aqui
 	iapp[64] = -9.28953;
-	iapp[65] = -6.51036;	
+	iapp[65] = -6.51036;
 	iapp[66] = -3.72341;
 	iapp[67] = -5.05325;
 	iapp[68] = -4.68108;
 	iapp[69] = -9.62691;
 
-	iapp[70] = -0.269478;	
+	iapp[70] = -0.269478;
 	iapp[71] = -3.99533;
 	iapp[72] = -4.09009;
 	iapp[73] = -4.03607;
@@ -274,9 +282,9 @@ void initRandIappValues_100(std::vector<double> &iapp) {
 	iapp[77] = -4.24802;
 	iapp[78] = -6.54378;
 	iapp[79] = -9.74914;
-	
+
 	iapp[80] = -1.38554;
-	iapp[81] = -8.53282;	
+	iapp[81] = -8.53282;
 	iapp[82] = -5.86123;
 	iapp[83] = -0.667745;
 	iapp[84] = -3.88913;
@@ -284,22 +292,24 @@ void initRandIappValues_100(std::vector<double> &iapp) {
 	iapp[86] = -1.58879;
 	iapp[87] = -1.57781;
 	iapp[88] = -3.17728;
-	iapp[89] = -8.71548;	
-	
+	iapp[89] = -8.71548;
+
 	iapp[90] = -1.50227;
 	iapp[91] = -7.49413;
 	iapp[92] = -6.292;
 	iapp[93] = -2.08136;
 	iapp[94] = -7.09815;
 	iapp[95] = -0.705741;
-	iapp[96] = -7.38884;	
+	iapp[96] = -7.38884;
 	iapp[97] = -7.08075;
 	iapp[98] = -0.490585;
 	iapp[99] = -1.63961;
-*/
-	/* VETOR ORDENADO ASC */
+	*/
 
-/*	iapp[0] = -9.749140;
+	/* VETOR ORDENADO */
+
+	/*
+	iapp[0] = -9.749140;
 	iapp[1] = -9.626910;
 	iapp[2] = -9.563740;
 	iapp[3] = -9.289530;
@@ -307,6 +317,7 @@ void initRandIappValues_100(std::vector<double> &iapp) {
 	iapp[5] = -8.864250;
 	iapp[6] = -8.782770;
 	iapp[7] = -8.715480;
+	iapp[8] = -8.663290;
 	iapp[9] = -8.532820;
 	iapp[10] = -8.496200;
 	iapp[11] = -8.153780;
@@ -399,114 +410,10 @@ void initRandIappValues_100(std::vector<double> &iapp) {
 	iapp[98] = 4.392070;
 	iapp[99] = 4.559620;
 	*/
-
-	/* VETOR ORDENADO DES */
-/*
-	iapp[0] = 4.559620;
-	iapp[1] = 4.392070;
-	iapp[2] = 4.374220;
-	iapp[3] = 4.154030;
-	iapp[4] = 4.123360;
-	iapp[5] = 4.112830;
-	iapp[6] = 3.997920;
-	iapp[7] = 3.812520;
-	iapp[8] = 3.714100;
-	iapp[9] = 3.407390;
-	iapp[10] = 2.965180;
-	iapp[11] = 2.923980;
-	iapp[12] = 2.831970;
-	iapp[13] = 2.827390;
-	iapp[14] = 2.667620;
-	iapp[15] = 2.612230;
-	iapp[16] = 2.263410;
-	iapp[17] = 2.068390;
-	iapp[18] = 1.931970;
-	iapp[19] = 1.824400;
-	iapp[20] = 1.662340;
-	iapp[21] = 1.536450;
-	iapp[22] = 1.237070;
-	iapp[23] = 1.023740;
-	iapp[24] = 1.017330;
-	iapp[25] = 0.794397;
-	iapp[26] = 0.769219;
-	iapp[27] = 0.690023;
-	iapp[28] = 0.655232;
-	iapp[29] = 0.237281;
-	iapp[30] = 0.197913;
-	iapp[31] = 0.071566;
-	iapp[32] = -0.170141;
-	iapp[33] = -0.258034;
-	iapp[34] = -0.269478;
-	iapp[35] = -0.471816;
-	iapp[36] = -0.490585;
-	iapp[37] = -0.667745;
-	iapp[38] = -0.705741;
-	iapp[39] = -1.385540;
-	iapp[40] = -1.502270;
-	iapp[41] = -1.577810;
-	iapp[42] = -1.588790;
-	iapp[43] = -1.639610;
-	iapp[44] = -1.735280;
-	iapp[45] = -2.081360;
-	iapp[46] = -2.186190;
-	iapp[47] = -2.575760;
-	iapp[48] = -2.594070;
-	iapp[49] = -2.691580;
-	iapp[50] = -3.177280;
-	iapp[51] = -3.209330;
-	iapp[52] = -3.412120;
-	iapp[53] = -3.688620;
-	iapp[54] = -3.702810;
-	iapp[55] = -3.714710;
-	iapp[56] = -3.723410;
-	iapp[57] = -3.842890;
-	iapp[58] = -3.889130;
-	iapp[59] = -3.995330;
-	iapp[60] = -4.036070;
-	iapp[61] = -4.083220;
-	iapp[62] = -4.090090;
-	iapp[63] = -4.248020;
-	iapp[64] = -4.546040;
-	iapp[65] = -4.681080;
-	iapp[66] = -5.053250;
-	iapp[67] = -5.392470;
-	iapp[68] = -5.598470;
-	iapp[69] = -5.677210;
-	iapp[70] = -5.682700;
-	iapp[71] = -5.764640;
-	iapp[72] = -5.773340;
-	iapp[73] = -5.861230;
-	iapp[74] = -5.892360;
-	iapp[75] = -6.292000;
-	iapp[76] = -6.510360;
-	iapp[77] = -6.543780;
-	iapp[78] = -6.825770;
-	iapp[79] = -6.843170;
-	iapp[80] = -6.868340;
-	iapp[81] = -7.080750;
-	iapp[82] = -7.098150;
-	iapp[83] = -7.202520;
-	iapp[84] = -7.388840;
-	iapp[85] = -7.494130;
-	iapp[86] = -8.090610;
-	iapp[87] = -8.105260;
-	iapp[88] = -8.153780;
-	iapp[89] = -8.496200;
-	iapp[90] = -8.532820;
-	iapp[91] = -8.663290;
-	iapp[92] = -8.715480;
-	iapp[93] = -8.782770;
-	iapp[94] = -8.864250;
-	iapp[95] = -9.077580;
-	iapp[96] = -9.289530;
-	iapp[97] = -9.563740;
-	iapp[98] = -9.626910;
-	iapp[99] = -9.749140;
-	*/
 }
 
 
-void initRandIappValues_200(std::vector<double> &iapp) {
+void initRandIappValues_200(std::vector<cpp_dec_float_100> &iapp) {
 
 	if (iapp.size()!=200)
 		return;
@@ -714,7 +621,7 @@ void initRandIappValues_200(std::vector<double> &iapp) {
 
 }
 
-void initRandIappValues_400(std::vector<double> &iapp) {
+void initRandIappValues_400(std::vector<cpp_dec_float_100> &iapp) {
 
 	if (iapp.size()!=400)
 		return;
@@ -1122,7 +1029,7 @@ void initRandIappValues_400(std::vector<double> &iapp) {
 }
 
 
-void initRandIappValues_old( std::vector<double> &iapp) {
+void initRandIappValues_old( std::vector<cpp_dec_float_100> &iapp) {
 	// Specific case of Random distribution values in the interval [i0, i0+deli]
 	// Fix values for every simulation
 

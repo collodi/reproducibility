@@ -16,12 +16,12 @@
 //   From Blanco, Tabak, Bertram. xxxxxxxxxxx , 2016.
 //============================================================================
 
+#include <cstdio>
 #include <iostream>     // std::cout
 #include <fstream>      // std::ofstream
 #include <sstream>
 #include <string>     	// std::string, std::to_string
 
-#include <cmath>        // pow
 #include <stdlib.h>
 
 #include <boost/array.hpp>
@@ -33,6 +33,8 @@
 using namespace std;
 using namespace boost::numeric::odeint;
 
+static bool debug = false;
+
 //c++ -std=c++1y -I /Users/PH/Downloads/boost MFM_Blanco2016.cpp -o teste
 
 //c++ -std=c++1y -I /Users/PH/Downloads/boost HH_Blanco2016v1.cpp iappDist.cpp iappDist.h SpikeTrain.cpp SpikeTrain.h
@@ -42,7 +44,7 @@ using namespace boost::numeric::odeint;
 // Simulation constants
 const unsigned int nNeurons = 100;
 // const double dt = 0.00125;							// Time step: ms
-const double dt = DT;
+const double dt = atof(DT);
 const double maxTimeSimulation = 8000;  		// Maximum simulation time: ms
 const bool SAVE_SIMULATION = true;
 
@@ -169,24 +171,25 @@ void HH_NeuronModel( const NeuronState_v_n_a_s &x , NeuronState_v_n_a_s &dxdt , 
 	//        					-gkbar*n[j]^4*(v[j]-vk)
 	// 							-gsyn*(atot-a[j]*s[j]/100)*(v[j]-vsyn)
 	//							+iapp([j])
-	dxdt[0] = -gl*(vj-vl)
-								-gnabar*pow(minf(vj),3)*(h0-nj)*(vj-vna)
-								-gkbar*pow(nj,4)*(vj-vk)
-								-gsyn*atotExcj*(vj-vExc)
-								-gsyn*atotInhj*(vj-vInh)
-								+iappj;
+
+	dxdt[0] = -gl * (vj - vl)
+		  - gnabar * pow(minf(vj), 3) * (h0 - nj) * (vj - vna)
+		  - gkbar * pow(nj, 4) * (vj - vk)
+		  - gsyn * atotExcj * (vj - vExc)
+		  - gsyn * atotInhj * (vj - vInh)
+		  + iappj;
 
 	// n[i] Activation of K+ conductance for cell i
 	// n[0..99]'= an(v[j])-(an(v[j])+bn(v[j]))*n[j]
-	dxdt[1] = an(vj)-(an(vj)+bn(vj))*nj;
+	dxdt[1] = an(vj) - (an(vj) + bn(vj)) * nj;
 
 	// a[i] Synaptic drive from cell i
 	// a[0..99]'= fsyn(v[j])*(1-a[j])/tauf - a[j]/taus
-	dxdt[2] = fsyn(vj)*(1-aj)/tauf - aj/taus;
+	dxdt[2] = fsyn(vj) * (1 - aj) / tauf - aj / taus;
 
 	// s[i] Synaptic recovery for terminals from cell i
 	// s[0..99]'=alphad*(1-s[j])-betad*fsyn(v[j])*s[j]
-	dxdt[3] = alphad*(1-sj)-betad*fsyn(vj)*sj;
+	dxdt[3] = alphad * (1 - sj) - betad * fsyn(vj) * sj;
 }
 
 void initEachNeuron( void) {
@@ -414,6 +417,7 @@ int main(int argc, char* argv[]) {
 			}
 
 			v_1 = network[n][0];							// Save previous voltage, used to detect spikes
+
 			// Integration, solving the ODE
 			stepper.do_step(
 					HH_NeuronModel,
@@ -509,14 +513,15 @@ int main(int argc, char* argv[]) {
 
 	if (SAVE_SIMULATION) {
 		string solver = "rk4_";
-		string sdt = "dt" + to_string((int)(dt*1000)) + "_";
-		string fileNameStr = "./results/HH_BBT_case" +
-				to_string(nCase) + "_" +
-				solver + sdt +
-				to_string(nNeurons) + "," +
-				to_string(nInhNeurons) + ",vI" +
-				to_string((int)vInh) + ",t=" +
-				to_string((int)(maxTimeSimulation/1000)) +"s_double_IappDES.txt"; //"s_SValues72,88,86,24.txt";
+		string sdt = "dt" + string(DT).substr(2);
+		// string fileNameStr = "./results/HH_BBT_case" +
+		// 		to_string(nCase) + "_" +
+		// 		solver + sdt +
+		// 		to_string(nNeurons) + "," +
+		// 		to_string(nInhNeurons) + ",vI" +
+		// 		to_string((int)vInh) + ",t=" +
+		// 		to_string((int)(maxTimeSimulation/1000)) +"s_double_IappDES.txt"; //"s_SValues72,88,86,24.txt";
+		string fileNameStr = "./results/" + sdt + ".txt";
 		writeToFile(fileNameStr, ave);
 		//writeToFile( fileNameStr, sv1);
 
@@ -531,13 +536,14 @@ int main(int argc, char* argv[]) {
 		//		writeToFile( fileNameStr, sv2);
 
 		// Saving the Episodes start/end times
-		fileNameStr = "./results/HH_BBT_case" +
-				to_string(nCase) + "_" +
-				solver + sdt +
-				to_string(nNeurons) + "," +
-				to_string(nInhNeurons) + ",vI" +
-				to_string((int)vInh) + ",t=" +
-				to_string((int)(maxTimeSimulation/1000)) +"s_double_IappDES,Epis.txt";
+		// fileNameStr = "./results/HH_BBT_case" +
+		// 		to_string(nCase) + "_" +
+		// 		solver + sdt +
+		// 		to_string(nNeurons) + "," +
+		// 		to_string(nInhNeurons) + ",vI" +
+		// 		to_string((int)vInh) + ",t=" +
+		// 		to_string((int)(maxTimeSimulation/1000)) +"s_double_IappDES,Epis.txt";
+		fileNameStr = "./results/" + sdt + "Epis.txt";
 		writeToFile( fileNameStr, networkOutputs);
 
 		string _underscore = "_";
@@ -548,23 +554,25 @@ int main(int argc, char* argv[]) {
 			negPosVInh = to_string((int)abs(vInh)) + "_t";
 
 		// Saving the applied currents values
-		fileNameStr = "./results/HH_BBT_case" +
-				to_string(nCase) + "_" +
-				solver + sdt +
-				to_string(nNeurons) + "," +
-				to_string(nInhNeurons) + ",vI" +
-				to_string((int)vInh) + ",t=" +
-				to_string((int)(maxTimeSimulation/1000)) +"s_double_IappDES,Iapp.txt";
+		// fileNameStr = "./results/HH_BBT_case" +
+		// 		to_string(nCase) + "_" +
+		// 		solver + sdt +
+		// 		to_string(nNeurons) + "," +
+		// 		to_string(nInhNeurons) + ",vI" +
+		// 		to_string((int)vInh) + ",t=" +
+		// 		to_string((int)(maxTimeSimulation/1000)) +"s_double_IappDES,Iapp.txt";
+		fileNameStr = "./results/" + sdt + "Iapp.txt";
 		writeIappToFile(iapp, fileNameStr);
 
 		// Saving spike train in Matlab format
-		fileNameStr = "./results/HH_BBT_case" +
-				to_string(nCase) + "_" +
-				solver + sdt +
-				to_string(nNeurons) + "_" +
-				to_string(nInhNeurons) + "_vI_" +
-				negPosVInh +
-				to_string((int)(maxTimeSimulation/1000)) + "s_double_IappDES_Spikes.m";
+		// fileNameStr = "./results/HH_BBT_case" +
+		// 		to_string(nCase) + "_" +
+		// 		solver + sdt +
+		// 		to_string(nNeurons) + "_" +
+		// 		to_string(nInhNeurons) + "_vI_" +
+		// 		negPosVInh +
+		// 		to_string((int)(maxTimeSimulation/1000)) + "s_double_IappDES_Spikes.m";
+		fileNameStr = "./results/" + sdt + ".m";
 		mSpikeTrain->printToMatlabFile(fileNameStr);
 
 	}

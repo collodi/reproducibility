@@ -48,8 +48,9 @@ using namespace boost::multiprecision;
 
 // Simulation constants
 const unsigned int nNeurons = 100;
-const double dt = 0.01;							// Time step: ms
-const double maxTimeSimulation = 4000;  		// Maximum simulation time: ms
+const double dt = atof(DT);
+// const double dt = 0.01;							// Time step: ms
+const double maxTimeSimulation = 8000;  		// Maximum simulation time: ms
 const bool SAVE_SIMULATION = true;
 
 // Simulation parameters
@@ -515,14 +516,16 @@ int main(int argc, char* argv[]) {
 
 	if (SAVE_SIMULATION) {
 		string solver = "rk4_";
-		string sdt = "dt" + to_string((int)(dt*1000)) + "_";
-		string fileNameStr = "./results/HH_BBT_case" +
-				to_string(nCase) + "_" +
-				solver + sdt +
-				to_string(nNeurons) + "," +
-				to_string(nInhNeurons) + ",vI" +
-				to_string((int)vInh) + ",t=" +
-				to_string((int)(maxTimeSimulation/1000)) +"s_doubleBoost_IappAsc.txt"; //"s_SValues72,88,86,24.txt";
+		string sdt = "dt" + string(DT).substr(2);
+		// string fileNameStr = "./results/HH_BBT_case" +
+		// 		to_string(nCase) + "_" +
+		// 		solver + sdt +
+		// 		to_string(nNeurons) + "," +
+		// 		to_string(nInhNeurons) + ",vI" +
+		// 		to_string((int)vInh) + ",t=" +
+		// 		to_string((int)(maxTimeSimulation/1000)) +"s_doubleBoost_IappAsc.txt"; //
+		// "s_SValues72,88,86,24.txt";
+		string fileNameStr = "./results/" + sdt + ".txt";
 		writeToFile(fileNameStr, ave);
 		//writeToFile( fileNameStr, sv1);
 
@@ -537,13 +540,14 @@ int main(int argc, char* argv[]) {
 		//		writeToFile( fileNameStr, sv2);
 
 		// Saving the Episodes start/end times
-		fileNameStr = "./results/HH_BBT_case" +
-				to_string(nCase) + "_" +
-				solver + sdt +
-				to_string(nNeurons) + "," +
-				to_string(nInhNeurons) + ",vI" +
-				to_string((int)vInh) + ",t=" +
-				to_string((int)(maxTimeSimulation/1000)) +"s_doubleBoost_IappAsc,Epis.txt";
+		// fileNameStr = "./results/HH_BBT_case" +
+		// 		to_string(nCase) + "_" +
+		// 		solver + sdt +
+		// 		to_string(nNeurons) + "," +
+		// 		to_string(nInhNeurons) + ",vI" +
+		// 		to_string((int)vInh) + ",t=" +
+		// 		to_string((int)(maxTimeSimulation/1000)) +"s_doubleBoost_IappAsc,Epis.txt";
+		fileNameStr = "./results/" + sdt + "Epis.txt";
 		writeToFile( fileNameStr, networkOutputs);
 
 		string _underscore = "_";
@@ -554,23 +558,25 @@ int main(int argc, char* argv[]) {
 			negPosVInh = to_string((int)abs(vInh)) + "_t";
 
 		// Saving the applied currents values
-		fileNameStr = "./results/HH_BBT_case" +
-				to_string(nCase) + "_" +
-				solver + sdt +
-				to_string(nNeurons) + "," +
-				to_string(nInhNeurons) + ",vI" +
-				to_string((int)vInh) + ",t=" +
-				to_string((int)(maxTimeSimulation/1000)) +"s_doubleBoost_IappAsc,Iapp.txt";
+		// fileNameStr = "./results/HH_BBT_case" +
+		// 		to_string(nCase) + "_" +
+		// 		solver + sdt +
+		// 		to_string(nNeurons) + "," +
+		// 		to_string(nInhNeurons) + ",vI" +
+		// 		to_string((int)vInh) + ",t=" +
+		// 		to_string((int)(maxTimeSimulation/1000)) +"s_doubleBoost_IappAsc,Iapp.txt";
+		fileNameStr = "./results/" + sdt + "Iapp.txt";
 		writeIappToFile(iapp, fileNameStr);
 
 		// Saving spike train in Matlab format
-		fileNameStr = "./results/HH_BBT_case" +
-				to_string(nCase) + "_" +
-				solver + sdt +
-				to_string(nNeurons) + "_" +
-				to_string(nInhNeurons) + "_vI_" +
-				negPosVInh +
-				to_string((int)(maxTimeSimulation/1000)) + "s_doubleBoost_IappAsc_Spikes.m";
+		// fileNameStr = "./results/HH_BBT_case" +
+		// 		to_string(nCase) + "_" +
+		// 		solver + sdt +
+		// 		to_string(nNeurons) + "_" +
+		// 		to_string(nInhNeurons) + "_vI_" +
+		// 		negPosVInh +
+		// 		to_string((int)(maxTimeSimulation/1000)) + "s_doubleBoost_IappAsc_Spikes.m";
+		fileNameStr = "./results/" + sdt + ".m";
 		mSpikeTrain->printToMatlabFile(fileNameStr);
 
 	}
